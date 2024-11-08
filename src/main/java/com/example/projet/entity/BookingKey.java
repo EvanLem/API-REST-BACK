@@ -14,6 +14,4 @@ class BookingKey implements Serializable {
     @Column(name="jeux_id")
     Long gameId;
 
-    // standard constructors, getters, and setters
-    // hashcode and equals implementation
 }

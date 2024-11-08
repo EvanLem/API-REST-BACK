@@ -6,6 +6,8 @@ import lombok.*;
 @Entity
 @Setter
 @Getter
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
 @Table(name="reservation")
 public class Booking {
 

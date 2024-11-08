@@ -1,36 +1,41 @@
 package com.example.projet.controller;
 
+import com.example.projet.DTO.GameDTO;
 import com.example.projet.DTO.UserDTO;
 import com.example.projet.component.UserMapper;
 import com.example.projet.service.UserService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
+
+    @Autowired
     private UserService userService;
+
+    @Autowired
     private UserMapper mapper;
 
-    @GetMapping()
-    public List<UserDTO> getUsers() {
-        System.out.println("TEST user");
-        return userService.getAll()
-                .stream()
-                .map(mapper::toDTO)
-                .collect(toList());
+    @GetMapping(produces="application/json")
+    public ResponseEntity<List<UserDTO>> getUsers() {
+        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping(value="/{id}")
-    public boolean getUserById() {
-        System.out.println("Test 1 user.");
-        return true;
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
+    @PostMapping()
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
+        System.out.println(userDTO.toString());
+        return new ResponseEntity<>(userService.addGame(userDTO), HttpStatus.OK);
+    }
 }
