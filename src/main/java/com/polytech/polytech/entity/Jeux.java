@@ -26,5 +26,5 @@ public class Jeux {
     private String description;
 
     @NonNull
-    private String pointGeo;
+    private String point_geo;
 }

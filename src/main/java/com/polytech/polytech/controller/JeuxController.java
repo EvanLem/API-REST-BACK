@@ -4,19 +4,16 @@ import com.polytech.polytech.dto.JeuxDTO;
 import com.polytech.polytech.service.JeuxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/jeux")
+@RestController
+@RequestMapping("/api/jeux")
 public class JeuxController {
 
     @Autowired
     private JeuxService jeuxService;
-
-    // CRUD (read all / read by id)
 
     @PostMapping
     public ResponseEntity<JeuxDTO> createJeux(@RequestBody JeuxDTO jeuxDTO) {

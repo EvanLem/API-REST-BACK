@@ -13,7 +13,7 @@ public class UtilisateurDTO {
     private Integer id;
     private String nom;
     private String prenom;
-    private String email;
+    private String mail;
     private String password;
     private String username;
 }

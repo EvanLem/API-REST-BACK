@@ -39,6 +39,9 @@ public class JeuxService {
     public JeuxDTO updateJeux(Integer id, JeuxDTO jeuxDTO) {
         Jeux jeux = jeuxRepository.findById(id).orElseThrow(() -> new RuntimeException("Jeux not found"));
         jeux.setNom(jeuxDTO.getNom());
+        jeux.setQuantite(jeuxDTO.getQuantite());
+        jeux.setDescription(jeuxDTO.getDescription());
+        jeux.setPoint_geo(jeuxDTO.getPoint_geo()); // Assurez-vous que ce champ est mis à jour
         jeux = jeuxRepository.save(jeux);
         return jeuxMapper.toDto(jeux);
     }

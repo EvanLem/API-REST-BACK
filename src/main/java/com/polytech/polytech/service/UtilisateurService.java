@@ -24,6 +24,7 @@ public class UtilisateurService {
         utilisateur = utilisateurRepository.save(utilisateur);
         return utilisateurMapper.toDto(utilisateur);
     }
+
     public UtilisateurDTO getUtilisateurById(Integer id) {
         Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new RuntimeException("Utilisateur not found"));
         return utilisateurMapper.toDto(utilisateur);
@@ -38,7 +39,10 @@ public class UtilisateurService {
     public UtilisateurDTO updateUtilisateur(Integer id, UtilisateurDTO utilisateurDTO) {
         Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new RuntimeException("Utilisateur not found"));
         utilisateur.setUsername(utilisateurDTO.getUsername());
-        utilisateur.setMail(utilisateurDTO.getEmail());
+        utilisateur.setNom(utilisateurDTO.getNom());
+        utilisateur.setPrenom(utilisateurDTO.getPrenom());
+        utilisateur.setPassword(utilisateurDTO.getPassword());
+        utilisateur.setMail(utilisateurDTO.getMail());
         utilisateur = utilisateurRepository.save(utilisateur);
         return utilisateurMapper.toDto(utilisateur);
     }
