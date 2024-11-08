@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Table(name="utilisateur")
 @Getter
+@Setter
 public class Utilisateur {
 
     @Id

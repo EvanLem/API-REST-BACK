@@ -5,8 +5,11 @@ import com.polytech.polytech.entity.Jeux;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface JeuxMapper {
-    JeuxDTO toDto(Jeux jeux);
+    JeuxMapper INSTANCE = Mappers.getMapper(JeuxMapper.class);
+
     Jeux toEntity(JeuxDTO jeuxDTO);
+
+    JeuxDTO toDto(Jeux jeux);
 }

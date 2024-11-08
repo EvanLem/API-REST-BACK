@@ -5,8 +5,11 @@ import com.polytech.polytech.entity.Utilisateur;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UtilisateurMapper {
-    UtilisateurDTO toDto(Utilisateur utilisateur);
+    UtilisateurMapper INSTANCE = Mappers.getMapper(UtilisateurMapper.class);
+
     Utilisateur toEntity(UtilisateurDTO utilisateurDTO);
+
+    UtilisateurDTO toDto(Utilisateur utilisateur);
 }
