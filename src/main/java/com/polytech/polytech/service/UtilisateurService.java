@@ -2,6 +2,7 @@ package com.polytech.polytech.service;
 
 import com.polytech.polytech.dto.UtilisateurDTO;
 import com.polytech.polytech.entity.Utilisateur;
+import com.polytech.polytech.exception.ResourceNotFoundException;
 import com.polytech.polytech.mapper.UtilisateurMapper;
 import com.polytech.polytech.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class UtilisateurService {
     }
 
     public UtilisateurDTO getUtilisateurById(Integer id) {
-        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new RuntimeException("Utilisateur not found"));
+        Utilisateur utilisateur = utilisateurRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("L'utilisateur est introuvable."));
         return utilisateurMapper.toDto(utilisateur);
     }
 
@@ -37,7 +39,8 @@ public class UtilisateurService {
     }
 
     public UtilisateurDTO updateUtilisateur(Integer id, UtilisateurDTO utilisateurDTO) {
-        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new RuntimeException("Utilisateur not found"));
+        Utilisateur utilisateur = utilisateurRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("L'utilisateur est introuvable."));
         utilisateur.setUsername(utilisateurDTO.getUsername());
         utilisateur.setNom(utilisateurDTO.getNom());
         utilisateur.setPrenom(utilisateurDTO.getPrenom());
@@ -48,6 +51,9 @@ public class UtilisateurService {
     }
 
     public void deleteUtilisateur(Integer id) {
+        if (!utilisateurRepository.existsById(id)) {
+            throw new ResourceNotFoundException("L'utilisateur est introuvable.");
+        }
         utilisateurRepository.deleteById(id);
     }
 }
