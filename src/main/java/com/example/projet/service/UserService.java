@@ -1,7 +1,7 @@
 package com.example.projet.service;
 
 import com.example.projet.DTO.UserDTO;
-import com.example.projet.UserRepository;
+import com.example.projet.repository.UserRepository;
 import com.example.projet.component.UserMapper;
 import com.example.projet.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

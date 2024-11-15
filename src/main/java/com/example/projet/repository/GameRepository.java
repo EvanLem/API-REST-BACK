@@ -1,4 +1,4 @@
-package com.example.projet;
+package com.example.projet.repository;
 
 import com.example.projet.entity.Game;
 import org.springframework.data.jpa.repository.JpaRepository;

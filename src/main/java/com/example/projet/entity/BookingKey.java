@@ -2,16 +2,23 @@ package com.example.projet.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 
+@Setter
+@Getter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
-class BookingKey implements Serializable {
+public class BookingKey implements Serializable {
 
+    // Getters et setters
     @Column(name="utilisateur_id")
-    Long userId;
+    Integer userId;
 
     @Column(name="jeux_id")
-    Long gameId;
-
+    Integer gameId;
 }

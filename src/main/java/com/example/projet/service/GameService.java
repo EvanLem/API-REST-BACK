@@ -1,7 +1,7 @@
 package com.example.projet.service;
 
 import com.example.projet.DTO.GameDTO;
-import com.example.projet.GameRepository;
+import com.example.projet.repository.GameRepository;
 import com.example.projet.component.GameMapper;
 import com.example.projet.entity.Game;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,6 @@ public class GameService {
         return gameRepository.findAll().stream()
                 .map(gameMapper::toDto)
                 .collect(Collectors.toList());
-
     }
 
     // Méthode pour ajouter un utilisateur

@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name="reservation")
 public class Booking {
 
