@@ -36,6 +36,11 @@ public class UserController {
     @PostMapping()
     public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
         System.out.println(userDTO.toString());
-        return new ResponseEntity<>(userService.addGame(userDTO), HttpStatus.OK);
+        return new ResponseEntity<>(userService.addUser(userDTO), HttpStatus.OK);
+    }
+
+    @PutMapping(value="/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Integer id, @RequestBody UserDTO userDTO) {
+        return new ResponseEntity<>(userService.updateUser(id, userDTO), HttpStatus.OK);
     }
 }

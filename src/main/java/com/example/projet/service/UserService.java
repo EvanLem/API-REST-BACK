@@ -29,7 +29,7 @@ public class UserService {
     }
 
     // Méthode pour ajouter un utilisateur
-    public UserDTO addGame(UserDTO userDTO) {
+    public UserDTO addUser(UserDTO userDTO) {
         try {
             System.out.println(userDTO);
             User user = userMapper.toEntity(userDTO);
@@ -42,7 +42,7 @@ public class UserService {
         }
     }
 
-    public UserDTO updateGame(Integer id, UserDTO userDTO) {
+    public UserDTO updateUser(Integer id, UserDTO userDTO) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Jeux not found"));
         if (userDTO.getNom() != null)  user.setNom(userDTO.getNom());
         if (userDTO.getPrenom() != null)  user.setPrenom(userDTO.getPrenom());
