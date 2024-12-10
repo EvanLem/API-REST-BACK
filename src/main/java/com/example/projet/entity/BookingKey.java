@@ -11,7 +11,6 @@ import java.util.Objects;
 @Getter
 @EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
 @Embeddable
 public class BookingKey implements Serializable {
 
@@ -21,4 +20,9 @@ public class BookingKey implements Serializable {
 
     @Column(name="jeux_id")
     Integer gameId;
+
+    public BookingKey(Integer userId, Integer gameId) {
+        this.userId = userId;
+        this.gameId = gameId;
+    }
 }
