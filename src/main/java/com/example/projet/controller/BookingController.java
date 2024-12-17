@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/booking")
@@ -20,24 +21,9 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping(produces="application/json")
-    public ResponseEntity<?> getBooking() {
-        try{
-            return new ResponseEntity<>(bookingService.getAllBookings(), HttpStatus.OK);
-        }catch (RuntimeException e) {
-            ApiError apiError = new ApiError(
-                    HttpStatus.NOT_FOUND.value(),
-                    e.getMessage(),
-                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
-            );
-            return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            ApiError apiError = new ApiError(
-                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                    e.getMessage(),
-                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
-            );
-            return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<List<BookingDTO>> getBooking() {
+        List<BookingDTO> gameList = bookingService.getAllBookings();
+        return new ResponseEntity<>(gameList, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}/{gameId}")
@@ -113,60 +99,13 @@ public class BookingController {
 
 
     @DeleteMapping("/{userId}/{gameId}")
-    public ResponseEntity<ApiError> deleteBooking(@PathVariable Integer userId, @PathVariable Integer gameId) {
-        try {
-            bookingService.deleteBooking(userId, gameId);
-        }catch (IllegalArgumentException e) {
-            ApiError apiError = new ApiError(
-                    HttpStatus.NOT_FOUND.value(),
-                    e.getMessage(),
-                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
-            );
-            return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
-        } catch (EntityExistsException e) {
-            ApiError apiError = new ApiError(
-                    HttpStatus.CONFLICT.value(),
-                    e.getMessage(),
-                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
-            );
-            return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
-        } catch (Exception e) {
-            ApiError apiError = new ApiError(
-                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                    e.getMessage(),
-                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
-            );
-            return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return null;
+    public void deleteBooking(@PathVariable Integer userId, @PathVariable Integer gameId) {
+        bookingService.deleteBooking(userId, gameId);
     }
 
     @PutMapping("/{userId}/{gameId}")
-    public ResponseEntity<?> updateBooking(@PathVariable Integer userId, @PathVariable Integer gameId, @RequestBody BookingDTO bookingDTO) {
-        try {
-            return new ResponseEntity<>(bookingService.updateBooking(userId, gameId, bookingDTO), HttpStatus.OK);
-        }catch (IllegalArgumentException e) {
-            ApiError apiError = new ApiError(
-                    HttpStatus.NOT_FOUND.value(),
-                    e.getMessage(),
-                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
-            );
-            return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
-        } catch (EntityExistsException e) {
-            ApiError apiError = new ApiError(
-                    HttpStatus.CONFLICT.value(),
-                    e.getMessage(),
-                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
-            );
-            return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
-        } catch (Exception e) {
-            ApiError apiError = new ApiError(
-                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                    e.getMessage(),
-                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
-            );
-            return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<BookingDTO> updateBooking(@PathVariable Integer userId, @PathVariable Integer gameId, @RequestBody BookingDTO bookingDTO) {
+        return new ResponseEntity<>(bookingService.updateBooking(userId, gameId, bookingDTO), HttpStatus.OK);
     }
 
 }
