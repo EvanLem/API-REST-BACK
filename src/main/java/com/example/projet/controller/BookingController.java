@@ -21,9 +21,18 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping(produces="application/json")
-    public ResponseEntity<List<BookingDTO>> getBooking() {
-        List<BookingDTO> gameList = bookingService.getAllBookings();
-        return new ResponseEntity<>(gameList, HttpStatus.OK);
+    public ResponseEntity<?> getBooking() {
+        try {
+            List<BookingDTO> gameList = bookingService.getAllBookings();
+            return new ResponseEntity<>(gameList, HttpStatus.OK);
+        } catch (Exception e) {
+            ApiError apiError = new ApiError(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    e.getMessage(),
+                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
+            );
+            return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{userId}/{gameId}")
@@ -68,7 +77,6 @@ public class BookingController {
         }
     }
 
-    // Endpoint pour ajouter un jeu
     @PostMapping()
     public ResponseEntity<?> addBooking(@RequestBody BookingDTO bookingDTO) {
         try {
@@ -97,15 +105,46 @@ public class BookingController {
         }
     }
 
-
     @DeleteMapping("/{userId}/{gameId}")
-    public void deleteBooking(@PathVariable Integer userId, @PathVariable Integer gameId) {
-        bookingService.deleteBooking(userId, gameId);
+    public ResponseEntity<?> deleteBooking(@PathVariable Integer userId, @PathVariable Integer gameId) {
+        try {
+            bookingService.deleteBooking(userId, gameId);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            ApiError apiError = new ApiError(
+                    HttpStatus.NOT_FOUND.value(),
+                    e.getMessage(),
+                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
+            );
+            return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            ApiError apiError = new ApiError(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    e.getMessage(),
+                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
+            );
+            return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{userId}/{gameId}")
-    public ResponseEntity<BookingDTO> updateBooking(@PathVariable Integer userId, @PathVariable Integer gameId, @RequestBody BookingDTO bookingDTO) {
-        return new ResponseEntity<>(bookingService.updateBooking(userId, gameId, bookingDTO), HttpStatus.OK);
+    public ResponseEntity<?> updateBooking(@PathVariable Integer userId, @PathVariable Integer gameId, @RequestBody BookingDTO bookingDTO) {
+        try {
+            return new ResponseEntity<>(bookingService.updateBooking(userId, gameId, bookingDTO), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            ApiError apiError = new ApiError(
+                    HttpStatus.NOT_FOUND.value(),
+                    e.getMessage(),
+                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
+            );
+            return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            ApiError apiError = new ApiError(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    e.getMessage(),
+                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
+            );
+            return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
 }
