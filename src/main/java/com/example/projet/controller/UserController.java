@@ -13,6 +13,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * Contrôleur pour gérer les opérations liées aux utilisateurs.
+ * <p>
+ * Fournit des endpoints pour récupérer, ajouter, mettre à jour les utilisateurs.
+ * Gère les erreurs et retourne une réponse appropriée avec des détails sur les erreurs.
+ */
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -23,6 +29,12 @@ public class UserController {
     @Autowired
     private UserMapper mapper;
 
+    /**
+     * Récupère la liste de tous les utilisateurs.
+     *
+     * @return Une réponse contenant la liste des utilisateurs sous forme de UserDTO.
+     *         En cas d'erreur, retourne une réponse avec un ApiError.
+     */
     @GetMapping(produces = "application/json")
     public ResponseEntity<?> getUsers() {
         try {
@@ -38,6 +50,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Récupère un utilisateur spécifique en fonction de son identifiant.
+     *
+     * @param id L'identifiant de l'utilisateur.
+     * @return Une réponse contenant les données de l'utilisateur sous forme de UserDTO.
+     *         En cas d'erreur, retourne une réponse avec un ApiError.
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getUserById(@PathVariable("id") Integer id) {
         try {
@@ -60,6 +79,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Ajoute un nouvel utilisateur à la base de données.
+     *
+     * @param userDTO Les données de l'utilisateur à ajouter sous forme de UserDTO.
+     * @return Une réponse contenant l'utilisateur créé.
+     *         En cas d'erreur, retourne une réponse avec un ApiError.
+     */
     @PostMapping
     public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO) {
         try {
@@ -82,6 +108,14 @@ public class UserController {
         }
     }
 
+    /**
+     * Met à jour les détails d'un utilisateur existant.
+     *
+     * @param id L'identifiant de l'utilisateur à mettre à jour.
+     * @param userDTO Les nouveaux données de l'utilisateur sous forme de UserDTO.
+     * @return Une réponse contenant l'utilisateur mis à jour.
+     *         En cas d'erreur, retourne une réponse avec un ApiError.
+     */
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") Integer id, @RequestBody UserDTO userDTO) {
         try {

@@ -4,28 +4,25 @@ import com.example.projet.DTO.UserDTO;
 import com.example.projet.entity.User;
 import org.mapstruct.Mapper;
 
+/**
+ * Mappage pour convertir les entités User et les objets DTO UserDTO
+ */
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+
+    /**
+     * Convertit une entité User en un objet UserDTO.
+     *
+     * @param user L'entité User à convertir.
+     * @return Un objet UserDTO avec les données de l'entité User.
+     */
     UserDTO toDto(User user);
+
+    /**
+     * Convertit un objet UserDTO en une entité User.
+     *
+     * @param userDTO L'objet UserDTO à convertir.
+     * @return Une entité User avec les données du DTO UserDTO.
+     */
     User toEntity(UserDTO userDTO);
 }
-
-/*
-@Component
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class UserMapper {
-    public UserDTO toDto(User user) {
-        Integer id = user.getId();
-        String name = user.getNom();
-        String prenom = user.getPrenom();
-        String mail = user.getMail();
-        String username = user.getUsername();
-
-        return new UserDTO(id, name, prenom, mail, username);
-    }
-
-    /*public User toUser(UserCreationDTO userDTO) {
-        return new User(userDTO.getName(), userDTO.getPassword(), new ArrayList<>());
-    }
-}
-*/

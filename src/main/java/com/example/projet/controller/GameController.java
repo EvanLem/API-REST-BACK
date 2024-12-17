@@ -12,6 +12,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * Contrôleur pour gérer les opérations liées aux jeux.
+ * <p>
+ * Fournit des endpoints pour récupérer, ajouter, mettre à jour et supprimer des jeux.
+ * Gère les erreurs et retourne une réponse appropriée avec des détails sur les erreurs.
+ */
 @RestController
 @RequestMapping("/api/game")
 public class GameController {
@@ -19,7 +25,13 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
-    // Endpoint pour récupérer tous les jeux
+    /**
+     * Récupère la liste de tous les jeux disponibles.
+     *
+     * @return Une réponse avec la liste des jeux sous forme de GameDTO.
+     *         En cas d'erreur, retourne une réponse avec un ApiError.
+     *
+     */
     @GetMapping(produces = "application/json")
     public ResponseEntity<?> getGames() {
         try {
@@ -35,6 +47,13 @@ public class GameController {
         }
     }
 
+    /**
+     * Récupère un jeu spécifique en fonction de son identifiant.
+     *
+     * @param id L'identifiant du jeu.
+     * @return Une réponse avec les données du jeu sous forme de GameDTO.
+     *         En cas d'erreur, retourne une réponse avec un ApiError.
+     */
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> getGamesById(@PathVariable("id") Integer id) {
         try {
@@ -57,7 +76,13 @@ public class GameController {
         }
     }
 
-    // Endpoint pour ajouter un jeu
+    /**
+     * Ajoute un nouveau jeu à la base de données.
+     *
+     * @param gameDTO Les données du jeu à ajouter sous forme de GameDTO.
+     * @return Une réponse avec le jeu créé.
+     *         En cas d'erreur, retourne une réponse avec un ApiError.
+     */
     @PostMapping
     public ResponseEntity<?> addGame(@RequestBody GameDTO gameDTO) {
         try {
@@ -79,6 +104,13 @@ public class GameController {
         }
     }
 
+    /**
+     * Supprime un jeu spécifique en fonction de son identifiant.
+     *
+     * @param id L'identifiant du jeu à supprimer.
+     * @return Une réponse sans contenu si la suppression réussit.
+     *         En cas d'erreur, retourne une réponse avec un ApiError.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteGame(@PathVariable("id") Integer id) {
         try {
@@ -101,6 +133,14 @@ public class GameController {
         }
     }
 
+    /**
+     * Met à jour les détails d'un jeu existant.
+     *
+     * @param id L'identifiant du jeu à mettre à jour.
+     * @param gameDTO Les nouvelles données du jeu sous forme de GameDTO.
+     * @return Une réponse avec le jeu mis à jour.
+     *         En cas d'erreur, retourne une réponse avec un ApiError.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<?> updateGame(@PathVariable("id") Integer id, @RequestBody GameDTO gameDTO) {
         try {
