@@ -84,6 +84,7 @@ public class UserService {
         if (userDTO.getPrenom() != null) user.setPrenom(userDTO.getPrenom());
         if (userDTO.getUsername() != null) user.setUsername(userDTO.getUsername());
         if (userDTO.getMail() != null) user.setMail(userDTO.getMail());
+        if (userDTO.getPassword() != null) user.setPassword(userDTO.getPassword());
 
         // Sauvegarde des changements dans la base de données
         user = userRepository.save(user);
