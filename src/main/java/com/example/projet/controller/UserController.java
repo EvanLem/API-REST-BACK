@@ -136,4 +136,33 @@ public class UserController {
             return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Supprime un utilisateur spécifique en fonction de son identifiant.
+     *
+     * @param id L'identifiant de l'utilisateur à supprimer.
+     * @return Une réponse sans contenu si la suppression réussit.
+     *         En cas d'erreur, retourne une réponse avec un ApiError.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteGame(@PathVariable("id") Integer id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            ApiError apiError = new ApiError(
+                    HttpStatus.NOT_FOUND.value(),
+                    e.getMessage(),
+                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
+            );
+            return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            ApiError apiError = new ApiError(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    e.getMessage(),
+                    LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
+            );
+            return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
